@@ -1,0 +1,76 @@
+{
+	"name": "JSONDataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Sink_Output",
+						"type": "DatasetReference"
+					},
+					"name": "JSONSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Sink_Output",
+						"type": "DatasetReference"
+					},
+					"name": "SinkforJSONOutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flattenJSON"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          feed as (authors as string[], banner_image as string, category_within_source as string, overall_sentiment_label as string, overall_sentiment_score as double, source as string, source_domain as string, summary as string, ticker_sentiment as (relevance_score as double, ticker as string, ticker_sentiment_label as string, ticker_sentiment_score as double)[], time_published as string, title as string, topics as (relevance_score as double, topic as string)[], url as string)[],",
+				"          items as short,",
+				"          relevance_score_definition as string,",
+				"          sentiment_score_definition as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'arrayOfDocuments') ~> JSONSource",
+				"JSONSource foldDown(unrollMultiple(feed.authors,feed.ticker_sentiment,feed.topics),",
+				"     mapColumn(",
+				"          authors = feed.authors,",
+				"          banner_image = feed.banner_image,",
+				"          category_within_source = feed.category_within_source,",
+				"          overall_sentiment_label = feed.overall_sentiment_label,",
+				"          overall_sentiment_score = feed.overall_sentiment_score,",
+				"          source = feed.source,",
+				"          source_domain = feed.source_domain,",
+				"          summary = feed.summary,",
+				"          ticker_sentiment = feed.ticker_sentiment,",
+				"          ticker_relevance_score = feed.ticker_sentiment.relevance_score,",
+				"          ticker = feed.ticker_sentiment.ticker,",
+				"          ticker_sentiment_label = feed.ticker_sentiment.ticker_sentiment_label,",
+				"          ticker_sentiment_score = feed.ticker_sentiment.ticker_sentiment_score,",
+				"          time_published = feed.time_published,",
+				"          title = feed.title,",
+				"          relevance_score = feed.topics.relevance_score,",
+				"          topic = feed.topics.topic,",
+				"          url = feed.url,",
+				"          items,",
+				"          relevance_score_definition,",
+				"          sentiment_score_definition",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattenJSON",
+				"flattenJSON sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkforJSONOutput"
+			]
+		}
+	}
+}

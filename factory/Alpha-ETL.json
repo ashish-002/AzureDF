@@ -1,0 +1,9 @@
+{
+	"name": "Alpha-ETL",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "d8d67e35-bc78-4e33-9e9f-0320970179a9",
+		"tenantId": "b050f68a-d3db-48a4-8298-b22d588ce176"
+	}
+}

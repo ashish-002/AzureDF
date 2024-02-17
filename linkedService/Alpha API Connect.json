@@ -1,0 +1,13 @@
+{
+	"name": "Alpha API Connect",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=IBM&apikey=MLM2BRQZ9PL2JJ9J&time_from=20180101T0130&time_to=20231231T0130&limit=1000",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
