@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "Alpha-ETL"
+		},
+		"LS_Sink_Copy_Activity_accountKey": {
+			"value": ""
+		},
+		"LS_TickerData_accountKey": {
+			"value": ""
+		},
+		"Alpha API Connect_properties_typeProperties_url": {
+			"value": "https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=IBM&apikey=MLM2BRQZ9PL2JJ9J&time_from=20180101T0130&time_to=20231231T0130&limit=1000"
+		},
+		"LS_Sink_Copy_Activity_properties_typeProperties_url": {
+			"value": "https://alphadatastore.dfs.core.windows.net/"
+		},
+		"LS_TickerData_properties_typeProperties_url": {
+			"value": "https://alphadatastore.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

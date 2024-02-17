@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "Alpha-ETL"
+		},
+		"LS_Sink_Copy_Activity_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_Sink_Copy_Activity'"
+		},
+		"LS_TickerData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_TickerData'"
+		},
+		"Alpha API Connect_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=IBM&apikey=MLM2BRQZ9PL2JJ9J&time_from=20180101T0130&time_to=20231231T0130&limit=1000"
+		},
+		"LS_Sink_Copy_Activity_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://alphadatastore.dfs.core.windows.net/"
+		},
+		"LS_TickerData_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://alphadatastore.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "Alpha-ETL_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_Sink_Copy_Activity_accountKey": {
+						"value": "[parameters('LS_Sink_Copy_Activity_accountKey')]"
+					},
+					"LS_TickerData_accountKey": {
+						"value": "[parameters('LS_TickerData_accountKey')]"
+					},
+					"Alpha API Connect_properties_typeProperties_url": {
+						"value": "[parameters('Alpha API Connect_properties_typeProperties_url')]"
+					},
+					"LS_Sink_Copy_Activity_properties_typeProperties_url": {
+						"value": "[parameters('LS_Sink_Copy_Activity_properties_typeProperties_url')]"
+					},
+					"LS_TickerData_properties_typeProperties_url": {
+						"value": "[parameters('LS_TickerData_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
