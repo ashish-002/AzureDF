@@ -17,5 +17,4 @@ b. Data flow for JSON Output: This activity processes the JSON data output from 
 Pipeline Annotations
 Retries are disabled.
 
-Note
-This README provides an overview of the AlphaETLPipeline. For detailed information on each activity, including configurations and dependencies, refer to the pipeline definition file.
+Note: This README provides an overview of the AlphaETLPipeline. For detailed information on each activity, including configurations and dependencies, refer to the pipeline definition file.
